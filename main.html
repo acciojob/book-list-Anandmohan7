@@ -1,16 +1,130 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyBookList</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    h1 span {
+      color: royalblue;
+    }
+    .form-group {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      text-align: left;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      box-sizing: border-box;
+    }
+    #submit {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background: royalblue;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #submit:hover {
+      background: darkblue;
+    }
+    .table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    .table th, .table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    .table-striped tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .delete {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .delete:hover {
+      background: darkred;
+    }
+  </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+
+  <h1>My<span>Book</span>List</h1>
+
+  <div class="form-group">
+    <input type="text" id="title" placeholder="Title">
+    <input type="text" id="author" placeholder="Author">
+    <input type="text" id="isbn" placeholder="ISBN#">
+    <button id="submit">Add Book</button>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN#</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="book-list"></tbody>
+  </table>
+
+  <script>
+    document.getElementById('submit').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const isbn = document.getElementById('isbn').value.trim();
+
+      if (title === "" || author === "" || isbn === "") {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      const list = document.getElementById('book-list');
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${title}</td>
+        <td>${author}</td>
+        <td>${isbn}</td>
+        <td><button class="delete">X</button></td>
+      `;
+
+      list.appendChild(row);
+
+      // Clear input fields
+      document.getElementById('title').value = "";
+      document.getElementById('author').value = "";
+      document.getElementById('isbn').value = "";
+    });
+
+    document.getElementById('book-list').addEventListener('click', function(e) {
+      if (e.target.classList.contains('delete')) {
+        e.target.parentElement.parentElement.remove();
+      }
+    });
+  </script>
 
 </body>
-
 </html>
